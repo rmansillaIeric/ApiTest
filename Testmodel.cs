@@ -6,7 +6,7 @@
         public string TipoActa { get; set; }
         public int IERIC { get; set; }
         public long Cuit { get; set; }
-        public string RazonSocial { get; set; }
+        public string razonsocial { get; set; }
         public string Asignacion { get; set; }
         public string Inicio { get; set; }
         public string Fin { get; set; }
