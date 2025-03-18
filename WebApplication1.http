@@ -4,3 +4,11 @@ GET {{WebApplication1_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+### Obtener datos de testJson
+GET {{WebApplication1_HostAddress}}/api/testJson
+Accept: application/json
+
+### Obtener datos de testJson2
+GET {{WebApplication1_HostAddress}}/api/testJson2
+Accept: application/json

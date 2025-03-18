@@ -11,9 +11,9 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class SumariosController : ControllerBase
     {
-    private readonly string connectionString = "Server=192.168.7.199;Database=IERICLegales;Integrated Security=True;TrustServerCertificate=True;";
+        private readonly string connectionString = "Server=192.168.7.199;Database=IERICLegales;Integrated Security=True;TrustServerCertificate=True;";
 
-    [HttpGet]
+    [HttpGet("GetSumarios")]
     public IActionResult GetSumarios()
     {
         using (SqlConnection connection = new SqlConnection(connectionString))
@@ -35,6 +35,6 @@ namespace WebApplication1.Controllers
             }
         }
     }
-}
+    }
 }
 
