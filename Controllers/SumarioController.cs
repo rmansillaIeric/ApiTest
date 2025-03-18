@@ -6,35 +6,38 @@ using System.Xml;
 
 namespace WebApplication1.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class SumariosController : ControllerBase
     {
-        private readonly string connectionString = "Server=192.168.7.199;Database=IERICLegales;Integrated Security=True;TrustServerCertificate=True;";
-
-    [HttpGet("GetSumarios")]
-    public IActionResult GetSumarios()
-    {
-        using (SqlConnection connection = new SqlConnection(connectionString))
+        private readonly string _connectionString;
+        public SumariosController(IConfiguration configuration)
         {
-            connection.Open();
-            using (SqlCommand command = new SqlCommand("sp_GetSumarios", connection))
+            _connectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+
+        [HttpGet("GetSumarios")]
+        public IActionResult GetSumarios()
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                command.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("sp_GetSumarios", connection))
                 {
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
+                    command.CommandType = CommandType.StoredProcedure;
 
-                    string jsonResult = JsonConvert.SerializeObject(dataTable, Newtonsoft.Json.Formatting.Indented);
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
 
-                    return Ok(jsonResult);
+                        string jsonResult = JsonConvert.SerializeObject(dataTable, Newtonsoft.Json.Formatting.Indented);
+
+                        return Ok(jsonResult);
+                    }
                 }
             }
         }
-    }
     }
 }
 

@@ -10,7 +10,6 @@ namespace WebApplication1.Controllers
     {
         // Endpoint GET que devuelve una persona hardcodeada
         [HttpGet("testJson")]
-
         public IActionResult Get()
         {
             // Datos hardcodeados para varios objetos TestModel
