@@ -36,8 +36,8 @@ public class AuthController : ControllerBase
                     using (var adapter = new SqlDataAdapter(command))
                     {
                         DataTable dataTable = new DataTable();
-                        await Task.Run(() => adapter.Fill(dataTable)); // Aseguramos que sea asincrónico si es necesario
-                                                                       // Verificamos si se encontraron resultados
+                        await Task.Run(() => adapter.Fill(dataTable)); 
+                                                                       
                         if (dataTable.Rows.Count == 0)
                         {
                             return NotFound("Usuario o contraseña incorrectos."); // Usuario no encontrado
