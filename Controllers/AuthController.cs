@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Data;
 using WebApplication1;
 using WebApplication1.DTOs;
+using System.Security.Cryptography;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -30,7 +31,7 @@ public class AuthController : ControllerBase
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Usuario", request.Usuario);
-                    command.Parameters.AddWithValue("@PasswordEncrypted", request.PasswordEncrypted);
+                    command.Parameters.AddWithValue("@PasswordEncrypted", CryptoCustom.Encriptar(request.PasswordEncrypted));
 
                     // Usamos SqlDataAdapter para llenar un DataTable con los resultados
                     using (var adapter = new SqlDataAdapter(command))
