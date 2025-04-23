@@ -42,7 +42,7 @@ namespace WebApplication1.Controllers
         [HttpGet("GetSumariosId")]
         public IActionResult GetSumarioId(int idNumeroSumario)
         {
-            string query = "SELECT *, CASE WHEN Estado = 1 THEN 'Iniciado' WHEN Estado = 2 THEN 'Resuleto' WHEN Estado = 3 THEN 'Anulado' WHEN Estado = 4 THEN 'Absuelto' WHEN Estado = 5 THEN 'Habilitado para el pago' WHEN Estado = 6 THEN 'Apelación' WHEN Estado = 7 THEN 'Reconsideración' WHEN Estado = 8 THEN 'Alzada' WHEN Estado = 10 THEN 'Para ejecución' WHEN Estado = 12 THEN 'En instrucción' WHEN Estado = 13 THEN 'Instruido para resolver' WHEN Estado = 14 THEN 'Recurso en trámite' ELSE CAST(Estado AS VARCHAR) END AS EstadoDescripcion, CASE WHEN FechaPago = CONVERT(DATETIME, '1899-12-30', 120) THEN NULL ELSE FechaPago END AS FechaPagoModificada FROM [IERICLegales].[dbo].[Sumarios] WHERE NumeroSumario = @IdNumeroSumario";
+            string query = "SELECT S.*, ET.DESCRIPCION AS EstadoDescripcion, R.DescRepresentacion AS RepresentacionDescripcion, rr.DescRepresentacion AS OrigenDescripcion, CASE WHEN FechaPago = CONVERT(DATETIME, '1899-12-30', 120) THEN NULL ELSE FechaPago END AS FechaPagoModificada FROM SUMARIOS AS S JOIN ESTADOTEMPORAL AS ET  ON ET.ESTADOID = S.ESTADO JOIN Representaciones AS R  ON R.CodigoRepresentacion = S.RepresentacionActual join Representaciones as rr on rr.CodigoRepresentacion = s.Origen WHERE NumeroSumario = @IdNumeroSumario";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
