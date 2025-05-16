@@ -42,7 +42,7 @@ namespace WebApplication1.Controllers
         [HttpGet("GetSumariosId")]
         public IActionResult GetSumarioId(int idNumeroSumario)
         {
-            string query = "SELECT S.*, ET.DESCRIPCION AS EstadoDescripcion, R.DescRepresentacion AS RepresentacionDescripcion, rr.DescRepresentacion AS OrigenDescripcion, CASE WHEN FechaPago = CONVERT(DATETIME, '1899-12-30', 120) THEN NULL ELSE FechaPago END AS FechaPagoModificada FROM SUMARIOS AS S JOIN EstadoSumario AS ET  ON ET.IdEstadoSumario = S.ESTADO JOIN Representaciones AS R  ON R.CodigoRepresentacion = S.RepresentacionActual join Representaciones as rr on rr.CodigoRepresentacion = s.Origen WHERE NumeroSumario = @IdNumeroSumario";
+            string query = "SELECT S.*, rs.Descripcion as ResultadoNotificacionDescripcion, ET.DESCRIPCION AS EstadoDescripcion, R.DescRepresentacion AS RepresentacionDescripcion, rr.DescRepresentacion AS OrigenDescripcion, CASE WHEN FechaPago = CONVERT(DATETIME, '1899-12-30', 120)THEN NULL ELSE FechaPago END AS FechaPagoModificada FROM SUMARIOS AS S JOIN EstadoSumario AS ET  ON ET.IdEstadoSumario = S.ESTADO JOIN Representaciones AS R  ON R.CodigoRepresentacion = S.RepresentacionActual  join Representaciones as rr on rr.CodigoRepresentacion = s.Origen join resultadonotificacion as rs on rs.id = s.ResultadoNotificacion WHERE NumeroSumario = @IdNumeroSumario";
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
